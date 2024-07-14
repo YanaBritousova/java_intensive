@@ -3,7 +3,7 @@ import java.util.Collection;
 import java.util.Comparator;
 
 public interface CustomArrayList<E> {
-
+     boolean add(E element);
      boolean add(int index, E element);
      void addAll(Collection<? extends E> c);
      void clear();

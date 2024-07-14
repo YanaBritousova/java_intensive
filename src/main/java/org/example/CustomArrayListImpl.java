@@ -8,7 +8,6 @@ import java.util.Objects;
 public class CustomArrayListImpl<E> implements CustomArrayList<E>{
 
     private E[] objects;
-    private static final int DEFAULT_SIZE = 10;
     private int size;
 
     @SuppressWarnings("unchecked")
@@ -16,14 +15,53 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
         this.objects = (E[]) new Object[]{};
     }
 
+    @SuppressWarnings("unchecked")
+    public CustomArrayListImpl(int size) {
+        this.objects = (E[]) new Object[size];
+    }
+
+    @SuppressWarnings("unchecked")
+    private E[] increase(E[]objects, int newSize){
+        E[] newObjects = (E[])new Object[newSize];
+        System.arraycopy(objects,0,newObjects,0,objects.length);
+        return newObjects;
+    }
+
+    @Override
+    public boolean add(E element) {
+        int tempSize=size;
+        if (this.size==this.objects.length){
+           objects = increase(objects,tempSize+1);
+        }
+        objects[size]=element;
+        this.size++;
+        return true;
+    }
 
     @Override
     public boolean add(int index, E element) {
+        Objects.checkIndex(index, size);
+        int tempSize=size;
+        if (size==objects.length){
+            objects = increase(objects, tempSize+1);
+        }
+        System.arraycopy(objects, index,objects,index+1,size-index);
+        objects[index] = element;
+        this.size++;
         return true;
     }
 
     @Override
     public void addAll(Collection<? extends E> c) {
+        if (c.size()> objects.length-size){
+            objects = increase(objects,size+c.size());
+        }
+        int s = size;
+        for (E e : c){
+            objects[s]=e;
+            s++;
+        }
+        size+=c.size();
 
     }
 
@@ -46,12 +84,18 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
 
     @Override
     public void remove(int index) {
-
+        Objects.checkIndex(index,size);
+        System.arraycopy(objects,index+1,objects,index,size-index-1);
+        objects[size-1]=null;
     }
 
     @Override
     public void remove(Object o) {
-
+        int i;
+        for (i=0;i<size;i++){
+            if (objects[i].equals(o)) break;
+        }
+        this.remove(i);
     }
 
     @Override
