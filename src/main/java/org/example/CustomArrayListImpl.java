@@ -31,7 +31,7 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
     public boolean add(E element) {
         int tempSize=size;
         if (this.size==this.objects.length){
-           objects = increase(objects,tempSize+1);
+            objects = increase(objects,tempSize+1);
         }
         objects[size]=element;
         this.size++;
@@ -68,7 +68,8 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
     @SuppressWarnings("unchecked")
     @Override
     public void clear() {
-        this.objects = (E[]) new Object[10];
+        this.objects = (E[]) new Object[]{};
+        this.size = 0;
     }
 
     @Override
@@ -100,7 +101,38 @@ public class CustomArrayListImpl<E> implements CustomArrayList<E>{
 
     @Override
     public void sort(Comparator<? super E> c) {
+        quickSort(objects, 0, size - 1, c);
+    }
 
+    private void quickSort(E[] array, int low, int high, Comparator<? super E> c) {
+        if (low < high) {
+            int pi = partition(array, low, high, c);
+
+            quickSort(array, low, pi - 1, c);
+            quickSort(array, pi + 1, high, c);
+        }
+    }
+
+    private int partition(E[] array, int low, int high, Comparator<? super E> c) {
+        E pivot = array[high];
+        int i = (low - 1);
+
+        for (int j = low; j <= high - 1; j++) {
+
+            if (c.compare(array[j], pivot) <= 0) {
+                i++;
+
+                E temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+
+        E temp = array[i + 1];
+        array[i + 1] = array[high];
+        array[high] = temp;
+
+        return i + 1;
     }
 
     @Override
