@@ -10,8 +10,8 @@ public class ObjectMapper {
         this.gson = new Gson();
     }
 
-    public String writeValueAsString(Client client) {
-        return gson.toJson(client);
+    public String writeValueAsString(Object o) {
+        return gson.toJson(o);
     }
 
 }
