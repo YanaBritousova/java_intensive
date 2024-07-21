@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS public.record
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    client_id integer NOT NULL,
+    service_id integer NOT NULL,
+    date date NOT NULL,
+    CONSTRAINT record_pkey PRIMARY KEY (id)
+)
