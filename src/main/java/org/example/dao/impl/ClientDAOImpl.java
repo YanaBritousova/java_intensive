@@ -1,7 +1,7 @@
-package org.example.dao;
+package org.example.dao.impl;
 
+import org.example.dao.ClientDAO;
 import org.example.models.Client;
-import org.example.models.Service;
 import org.example.util.DBConnection;
 
 import java.sql.Connection;
@@ -10,20 +10,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public class ServiceDAOImpl implements ClientDAO<Service,Long> {
+public class ClientDAOImpl implements ClientDAO<Client, Long> {
+
     @Override
-    public Optional<Service> get(Long id) {
+    public Optional<Client> get(Long id) {
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT * FROM service WHERE id=?")) {
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM clients WHERE id=?")) {
 
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                Service service = new Service();
-                service.setId(rs.getLong("id"));
-                service.setService(rs.getString("name"));
-                return Optional.of(service);
+                Client client = new Client();
+                client.setId(rs.getLong("id"));
+                client.setName(rs.getString("name"));
+                return Optional.of(client);
             }
 
         } catch (SQLException ex) {
@@ -34,20 +35,21 @@ public class ServiceDAOImpl implements ClientDAO<Service,Long> {
     }
 
     @Override
-    public void save(Service service) {
-        String insertQuery = "INSERT INTO service " + "(name) VALUES " + "(?)";
+    public void save(Client client) {
+        String insertQuery = "INSERT INTO clients " + "(name) VALUES " + "(?)";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(insertQuery)) {
-            ps.setString(1,service.getService());
+            ps.setString(1, client.getName());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
+
     @Override
     public void delete(Long id) {
-        String deleteQuery = "DELETE FROM service WHERE id=?";
+        String deleteQuery = "DELETE FROM clients WHERE id=?";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(deleteQuery)) {
             ps.setLong(1, id);

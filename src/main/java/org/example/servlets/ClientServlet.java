@@ -3,7 +3,7 @@ package org.example.servlets;
 import com.google.gson.Gson;
 import org.example.models.Client;
 import org.example.service.ClientService;
-import org.example.service.ClientServiceImpl;
+import org.example.service.impl.ClientServiceImpl;
 import org.example.util.ObjectMapper;
 
 import javax.servlet.ServletException;

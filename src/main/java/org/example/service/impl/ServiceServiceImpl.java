@@ -1,9 +1,10 @@
-package org.example.service;
+package org.example.service.impl;
 
-import org.example.dao.ServiceDAOImpl;
+import org.example.dao.impl.ServiceDAOImpl;
 import org.example.models.Service;
+import org.example.service.ServiceService;
 
-public class ServiceServiceImpl implements ServiceService{
+public class ServiceServiceImpl implements ServiceService {
     private final ServiceDAOImpl serviceDAO;
 
     public ServiceServiceImpl() {

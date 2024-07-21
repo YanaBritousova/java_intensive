@@ -1,11 +1,8 @@
 package org.example.servlets;
 
 import com.google.gson.Gson;
-import org.example.models.Client;
 import org.example.models.Service;
-import org.example.service.ClientService;
-import org.example.service.ServiceService;
-import org.example.service.ServiceServiceImpl;
+import org.example.service.impl.ServiceServiceImpl;
 import org.example.util.ObjectMapper;
 
 import javax.servlet.ServletException;
